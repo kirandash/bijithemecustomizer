@@ -30,9 +30,6 @@ function wpt_register_theme_customizer( $wp_customize ) {
 	$wp_customize->get_control('display_header_text')->section = 'header_text_styles';  
 	$wp_customize->get_control('header_textcolor')->section = 'header_text_styles'; 
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage'; 
-	
-	// Customize the Navigation Settings
-	$wp_customize->get_section('nav')->title = __('Change your menus', 'wptthemecustomizer');
 
 }
 add_action( 'customize_register', 'wpt_register_theme_customizer' );
@@ -115,5 +112,24 @@ function wpt_theme_menus() {
 
 }
 add_action( 'init', 'wpt_theme_menus' );
+
+
+// Add theme widgets
+function wpt_create_widget( $name, $id, $description ) {
+
+  register_sidebar(array(
+    'name' => __( $name ),   
+    'id' => $id, 
+    'description' => __( $description ),
+    'before_widget' => '<div class="widget">',
+    'after_widget' => '</div>',
+    'before_title' => '<h3>',
+    'after_title' => '</h3>'
+  ));
+
+}
+wpt_create_widget( 'Main Widget', 'main_widget', 'For testing purposes' );
+wpt_create_widget( 'Secondary Widget', 'secondary_widget', 'Also for testing purposes' );
+
 
 ?>
