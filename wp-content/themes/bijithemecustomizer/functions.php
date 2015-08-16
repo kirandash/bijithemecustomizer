@@ -31,6 +31,32 @@ function wpt_register_theme_customizer( $wp_customize ) {
 	$wp_customize->get_control('header_textcolor')->section = 'header_text_styles'; 
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage'; 
 
+  // Add Custom Logo Settings
+  $wp_customize->add_section( 'custom_logo' , array(
+    'title'      => __('Change Your Logo','wptthemecustomizer'), 
+    'panel'      => 'design_settings',
+    'priority'   => 20    
+  ) );  
+  $wp_customize->add_setting(
+      'wpt_logo',
+      array(
+          'default'         => get_template_directory_uri() . '/images/logo.png',
+          //'transport'       => 'postMessage'
+      )
+  );
+  $wp_customize->add_control(
+       new WP_Customize_Image_Control(
+           $wp_customize,
+           'custom_logo',
+           array(
+               'label'      => __( 'Change Logo', 'wptthemecustomizer' ),
+               'section'    => 'custom_logo',
+               'settings'   => 'wpt_logo',
+               'context'    => 'wpt-custom-logo' 
+           )
+       )
+   ); 
+
   // Create custom panels
   $wp_customize->add_panel( 'general_settings', array(
       'priority' => 10,
